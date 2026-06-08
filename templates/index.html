@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>
+        NailsVoYou | Professional Nail Services
+    </title>
+
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
+    <link rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"> 
+
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+
+<nav class="navbar">
+
+    <h2>NailsVoYou</h2>
+
+    <ul>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#gallery">Gallery</a></li>
+        <li><a href="#contact">Contact</a></li>
+    </ul>
+
+</nav>
+
+<!-- HERO -->
+
+<section id="home" class="hero">
+
+    <div class="hero-left">
+
+        <div class="badge">
+            ✨ Welcome to NailsVoYou
+        </div>
+
+        <h1>
+            Beautiful Nails,<br>
+            Beautiful You
+        </h1>
+
+        <p>
+            Treat yourself to beautiful nail care,
+            custom designs and luxury pampering.
+        </p>
+
+        <a href="#gallery" class="btn">
+            View Gallery
+        </a>
+
+    </div>
+
+    <div class="hero-right">
+
+        <img
+            src="{{ url_for('static', filename='nail background.jpg') }}"
+            alt="NailsVoYou"
+            class="main-logo">
+
+    </div>
+
+</section>
+
+<!-- BOOKING -->
+
+<li><a href="#booking">Book Appointment</a></li>
+
+    <form class="booking-card"
+          action="/book"
+          method="POST">
+
+        <h2>
+            💅 Book Your Appointment
+        </h2>
+
+        <input
+            type="text"
+            name="first_name"
+            placeholder="First Name"
+            required>
+
+        <input
+            type="text"
+            name="last_name"
+            placeholder="Last Name"
+            required>
+
+        <input
+            type="email"
+            name="email"
+            placeholder="Email Address"
+            required>
+
+        <input
+            type="tel"
+            name="phone"
+            placeholder="Phone Number"
+            required>
+
+        <input
+            type="text"
+            id="appointment-date"
+            name="appointment_date"
+            placeholder="Select Date"
+            required>
+
+        <input
+            type="text"
+            id="appointment-time"
+            name="appointment_time"
+            placeholder="Select Time"
+            required>
+
+        <textarea
+            name="service"
+            rows="3"
+            placeholder="Requested Service"></textarea>
+
+        <textarea
+            name="notes"
+            rows="4"
+            placeholder="Additional Notes"></textarea>
+
+        <button type="submit">
+            Book Appointment
+        </button>
+
+    </form>
+
+</section>
+
+<!-- FEATURES -->
+
+<section class="features">
+
+    <div class="feature-card">
+        💎 Premium Quality
+    </div>
+
+    <div class="feature-card">
+        ❤️ Hygienic & Safe
+    </div>
+
+    <div class="feature-card">
+        ⏰ On Time Service
+    </div>
+
+    <div class="feature-card">
+        ⭐ Skilled Technician
+    </div>
+
+</section>
+
+<!-- GALLERY -->
+
+<section id="gallery" class="gallery">
+
+    <h2>Our Gallery</h2>
+
+    <div class="gallery-grid">
+
+        <img src="{{ url_for('static', filename='nail example 1.jpeg') }}" alt="Nail Design 1">
+
+        <img src="{{ url_for('static', filename='nail example 2.jpeg') }}" alt="Nail Design 2">
+
+        <img src="{{ url_for('static', filename='nail example 3.jpeg') }}" alt="Nail Design 3">
+
+        <img src="{{ url_for('static', filename='nail example 4.jpeg') }}" alt="Nail Design 4">
+
+        <img src="{{ url_for('static', filename='nail example 5.jpeg') }}" alt="Nail Design 5">
+
+        <img src="{{ url_for('static', filename='nail example 6.jpeg') }}" alt="Nail Design 6">
+
+    </div>
+
+</section>
+
+<!-- CONTACT -->
+
+<section id="contact" class="contact">
+
+    <h2>Contact Information</h2>
+
+    <p>📞 (253) 409-9823</p>
+
+    <p>📧 phuma1959@gmail.com</p>
+
+    <p>
+        📍 3405 Talbot Rd S
+        <br>
+        Renton, WA 98055
+    </p>
+
+    <a href="https://www.instagram.com/nailsvoyou/"
+       target="_blank">
+
+        <img
+            src="{{ url_for('static', filename='instagram.jpeg') }}"
+            alt="Instagram"
+            class="instagram-icon">
+
+    </a>
+
+</section>
+
+<!-- FOOTER -->
+
+<footer class="footer">
+
+    <h3>NailsVoYou</h3>
+
+    <p>
+        Beautiful Nails, Beautiful You
+    </p>
+
+    <p>
+        Instagram: @nailsvoyou
+    </p>
+
+    <p class="developer">
+        Website Designed & Developed by Roy
+    </p>
+
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</body>
+</html>
