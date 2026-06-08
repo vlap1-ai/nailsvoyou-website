@@ -4,9 +4,6 @@ import os
 
 app = Flask(__name__)
 
-# =========================
-# EMAIL CONFIG
-# =========================
 app.config["MAIL_SERVER"] = "smtp.gmail.com"
 app.config["MAIL_PORT"] = 587
 app.config["MAIL_USE_TLS"] = True
@@ -16,17 +13,11 @@ app.config["MAIL_DEFAULT_SENDER"] = os.getenv("MAIL_USERNAME")
 
 mail = Mail(app)
 
-# =========================
-# HOME PAGE
-# =========================
 @app.route("/")
 def home():
     return render_template("index.html")
 
 
-# =========================
-# BOOKING ROUTE
-# =========================
 @app.route("/book", methods=["POST"])
 def book():
     try:
@@ -39,12 +30,10 @@ def book():
         service = request.form["service"]
         notes = request.form["notes"]
 
-        # =====================
-        # EMAIL TO OWNER
-        # =====================
+        # ================= ADMIN EMAIL =================
         admin_msg = Message(
-            subject="💅 New Booking NailsVoYou",
-            recipients=[app.config["MAIL_USERNAME"]],
+            subject="New Booking NailsVoYou",
+            recipients=[app.config["MAIL_USERNAME"]]
         )
 
         admin_msg.body = f"""
@@ -61,12 +50,10 @@ Notes: {notes}
 
         mail.send(admin_msg)
 
-        # =====================
-        # EMAIL TO CUSTOMER
-        # =====================
+        # ================= CUSTOMER EMAIL =================
         customer_msg = Message(
-            subject="💅 Appointment Confirmed",
-            recipients=[email],
+            subject="Appointment Confirmed",
+            recipients=[email]
         )
 
         customer_msg.body = f"""
@@ -83,7 +70,6 @@ We will contact you soon.
 
         mail.send(customer_msg)
 
-        # SUCCESS REDIRECT (IMPORTANT)
         return redirect(url_for("home"))
 
     except Exception as e:
