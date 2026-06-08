@@ -1,32 +1,11 @@
 from flask import Flask, render_template, request
-from flask_mail import Mail, Message
 
 app = Flask(__name__)
-
-# =========================
-# Gmail Settings
-# =========================
-
-app.config["MAIL_SERVER"] = "smtp.gmail.com"
-app.config["MAIL_PORT"] = 587
-app.config["MAIL_USE_TLS"] = True
-app.config["MAIL_USERNAME"] = "phuma1959@gmail.com"
-app.config["MAIL_PASSWORD"] = "pbeykweppdwklzdq"
-
-mail = Mail(app)
-
-# =========================
-# Home Page
-# =========================
 
 @app.route("/")
 def home():
     return render_template("index.html")
 
-
-# =========================
-# Booking Form
-# =========================
 
 @app.route("/book", methods=["POST"])
 def book():
@@ -40,96 +19,15 @@ def book():
     service = request.form["service"]
     notes = request.form["notes"]
 
-    msg = Message(
-        subject="💅 New NailsVoYou Appointment",
-        sender="phuma1959@gmail.com",
-        recipients=["phuma1959@gmail.com"]
-    )
-
-    # Text fallback
-
-    msg.body = f"""
-NEW APPOINTMENT
-
-Name: {first_name} {last_name}
-
-Email: {email}
-
-Phone: {phone}
-
-Date: {appointment_date}
-
-Time: {appointment_time}
-
-Service: {service}
-
-Notes: {notes}
-"""
-
-    # HTML Email
-
-    msg.html = f"""
-    <div style="
-    max-width:650px;
-    margin:auto;
-    background:#fff7fa;
-    padding:30px;
-    border-radius:20px;
-    font-family:Arial,sans-serif;
-    ">
-
-        <div style="text-align:center;">
-
-            <h1 style="
-            color:#ff5fa2;
-            margin-bottom:10px;
-            ">
-                💅 NailsVoYou
-            </h1>
-
-            <p style="
-            color:#777;
-            ">
-                New Appointment Request
-            </p>
-
-        </div>
-
-        <div style="
-        background:white;
-        padding:25px;
-        border-radius:15px;
-        margin-top:20px;
-        ">
-
-            <p><strong>Name:</strong> {first_name} {last_name}</p>
-
-            <p><strong>Email:</strong> {email}</p>
-
-            <p><strong>Phone:</strong> {phone}</p>
-
-            <p><strong>Date:</strong> {appointment_date}</p>
-
-            <p><strong>Time:</strong> {appointment_time}</p>
-
-            <p><strong>Service:</strong> {service}</p>
-
-            <p><strong>Notes:</strong> {notes}</p>
-
-        </div>
-
-        <p style="
-        text-align:center;
-        margin-top:20px;
-        color:#888;
-        ">
-            NailsVoYou • Renton, Washington
-        </p>
-
-    </div>
-    """
-
-    mail.send(msg)
+    print("\n========== NEW APPOINTMENT ==========")
+    print("Name:", first_name, last_name)
+    print("Email:", email)
+    print("Phone:", phone)
+    print("Date:", appointment_date)
+    print("Time:", appointment_time)
+    print("Service:", service)
+    print("Notes:", notes)
+    print("=====================================\n")
 
     return f"""
 <!DOCTYPE html>
@@ -137,7 +35,7 @@ Notes: {notes}
 
 <head>
 
-<title>Appointment Confirmed</title>
+<title>Appointment Submitted</title>
 
 <style>
 
@@ -163,10 +61,6 @@ h1 {{
     color:#ff6ea9;
 }}
 
-p {{
-    margin:15px 0;
-}}
-
 a {{
     display:inline-block;
     margin-top:20px;
@@ -187,37 +81,21 @@ a {{
 
 <h1>🎉 Appointment Submitted!</h1>
 
-<p>
-Thank you {first_name} {last_name}
-</p>
+<p>Thank you {first_name} {last_name}</p>
 
-<p>
-We have received your appointment request.
-</p>
+<p>We have received your appointment request.</p>
 
-<p>
-📅 {appointment_date}
-</p>
+<p>📅 {appointment_date}</p>
 
-<p>
-⏰ {appointment_time}
-</p>
+<p>⏰ {appointment_time}</p>
 
-<p>
-📞 {phone}
-</p>
+<p>📞 {phone}</p>
 
-<p>
-📧 {email}
-</p>
+<p>📧 {email}</p>
 
-<p>
-NailsVoYou will contact you shortly.
-</p>
+<p>NailsVoYou will contact you shortly.</p>
 
-<a href="/">
-Return Home
-</a>
+<a href="/">Return Home</a>
 
 </div>
 
@@ -225,7 +103,6 @@ Return Home
 
 </html>
 """
-
 
 if __name__ == "__main__":
     app.run(debug=True)
