@@ -32,6 +32,7 @@
         <li><a href="#home">Home</a></li>
         <li><a href="#gallery">Gallery</a></li>
         <li><a href="#contact">Contact</a></li>
+        <li><a href="#booking">Book Appointment</a></li>
     </ul>
 
 </nav>
@@ -75,67 +76,26 @@
 
 <!-- BOOKING -->
 
-<li><a href="#booking">Book Appointment</a></li>
+<section id="booking">
 
     <form class="booking-card"
           action="/book"
           method="POST">
 
-        <h2>
-            💅 Book Your Appointment
-        </h2>
+        <h2>💅 Book Your Appointment</h2>
 
-        <input
-            type="text"
-            name="first_name"
-            placeholder="First Name"
-            required>
+        <input type="text" name="first_name" placeholder="First Name" required>
+        <input type="text" name="last_name" placeholder="Last Name" required>
+        <input type="email" name="email" placeholder="Email Address" required>
+        <input type="tel" name="phone" placeholder="Phone Number" required>
 
-        <input
-            type="text"
-            name="last_name"
-            placeholder="Last Name"
-            required>
+        <input type="text" id="appointment-date" name="appointment_date" placeholder="Select Date" required>
+        <input type="text" id="appointment-time" name="appointment_time" placeholder="Select Time" required>
 
-        <input
-            type="email"
-            name="email"
-            placeholder="Email Address"
-            required>
+        <textarea name="service" rows="3" placeholder="Requested Service"></textarea>
+        <textarea name="notes" rows="4" placeholder="Additional Notes"></textarea>
 
-        <input
-            type="tel"
-            name="phone"
-            placeholder="Phone Number"
-            required>
-
-        <input
-            type="text"
-            id="appointment-date"
-            name="appointment_date"
-            placeholder="Select Date"
-            required>
-
-        <input
-            type="text"
-            id="appointment-time"
-            name="appointment_time"
-            placeholder="Select Time"
-            required>
-
-        <textarea
-            name="service"
-            rows="3"
-            placeholder="Requested Service"></textarea>
-
-        <textarea
-            name="notes"
-            rows="4"
-            placeholder="Additional Notes"></textarea>
-
-        <button type="submit">
-            Book Appointment
-        </button>
+        <button type="submit">Book Appointment</button>
 
     </form>
 

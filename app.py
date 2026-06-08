@@ -1,30 +1,26 @@
 from flask import Flask, render_template, request
 from flask_mail import Mail, Message
+import os
 
 app = Flask(__name__)
 
 # =========================
-# EMAIL CONFIG
+# EMAIL CONFIG (SAFE WAY)
 # =========================
 app.config["MAIL_SERVER"] = "smtp.gmail.com"
 app.config["MAIL_PORT"] = 587
 app.config["MAIL_USE_TLS"] = True
-app.config["MAIL_USERNAME"] = "phuma1959@gmail.com"
-app.config["MAIL_PASSWORD"] = "pbeykweppdwklzdq"
+
+app.config["phuma1959@gmail.com"] = os.getenv("MAIL_USERNAME")
+app.config["pbeykweppdwklzdq"] = os.getenv("MAIL_PASSWORD")
 
 mail = Mail(app)
 
-# =========================
-# HOME PAGE
-# =========================
 @app.route("/")
 def home():
     return render_template("index.html")
 
 
-# =========================
-# BOOKING ROUTE
-# =========================
 @app.route("/book", methods=["POST"])
 def book():
 
@@ -38,16 +34,16 @@ def book():
     notes = request.form["notes"]
 
     # =========================
-    # EMAIL TO OWNER (YOU)
+    # EMAIL TO YOU (ADMIN)
     # =========================
-    owner_msg = Message(
-        subject="💅 New NailsVoYou Booking",
+    admin_msg = Message(
+        subject="💅 New Booking NailsVoYou",
         sender=app.config["MAIL_USERNAME"],
         recipients=[app.config["MAIL_USERNAME"]]
     )
 
-    owner_msg.body = f"""
-NEW BOOKING RECEIVED
+    admin_msg.body = f"""
+NEW BOOKING
 
 Name: {first_name} {last_name}
 Email: {email}
@@ -58,58 +54,36 @@ Service: {service}
 Notes: {notes}
 """
 
-    mail.send(owner_msg)
-
+    mail.send(admin_msg)
 
     # =========================
     # EMAIL TO CUSTOMER
     # =========================
     customer_msg = Message(
-        subject="💅 Your NailsVoYou Appointment Confirmation",
+        subject="💅 Appointment Confirmed",
         sender=app.config["MAIL_USERNAME"],
         recipients=[email]
     )
 
-    customer_msg.html = f"""
-    <div style="font-family:Arial; padding:20px;">
-        <h2>💅 NailsVoYou</h2>
+    customer_msg.body = f"""
+Hi {first_name},
 
-        <p>Hi {first_name},</p>
+We received your appointment 💅
 
-        <p>We received your appointment request.</p>
+Date: {appointment_date}
+Time: {appointment_time}
+Service: {service}
 
-        <hr>
-
-        <p><b>Date:</b> {appointment_date}</p>
-        <p><b>Time:</b> {appointment_time}</p>
-        <p><b>Service:</b> {service}</p>
-
-        <hr>
-
-        <p>📍 3405 Talbot Rd S, Renton WA</p>
-
-        <p>We will contact you soon to confirm.</p>
-
-        <p>Thank you 💅</p>
-    </div>
-    """
+We will contact you soon.
+"""
 
     mail.send(customer_msg)
 
-    # =========================
-    # SUCCESS PAGE
-    # =========================
     return f"""
-    <html>
-    <body style="font-family:Arial; text-align:center; padding:50px;">
-        <h1>🎉 Appointment Submitted!</h1>
-        <p>Thank you {first_name} {last_name}</p>
-        <p>We sent confirmation to your email.</p>
-        <a href="/">Go Back</a>
-    </body>
-    </html>
+    <h1>Appointment Submitted 🎉</h1>
+    <p>Check your email for confirmation</p>
     """
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=10000)
+    app.run()
