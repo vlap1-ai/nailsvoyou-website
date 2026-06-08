@@ -4,20 +4,33 @@ import os
 
 app = Flask(__name__)
 
+# =========================
+# EMAIL CONFIG
+# =========================
 app.config["MAIL_SERVER"] = "smtp.gmail.com"
 app.config["MAIL_PORT"] = 587
 app.config["MAIL_USE_TLS"] = True
-app.config["MAIL_USERNAME"] = os.getenv("MAIL_USERNAME")
-app.config["MAIL_PASSWORD"] = os.getenv("MAIL_PASSWORD")
-app.config["MAIL_DEFAULT_SENDER"] = os.getenv("MAIL_USERNAME")
+MAIL_USERNAME = os.environ.get("MAIL_USERNAME")
+MAIL_PASSWORD = os.environ.get("MAIL_PASSWORD")
+
+app.config["MAIL_USERNAME"] = MAIL_USERNAME
+app.config["MAIL_PASSWORD"] = MAIL_PASSWORD
+app.config["MAIL_DEFAULT_SENDER"] = MAIL_USERNAME
 
 mail = Mail(app)
 
+
+# =========================
+# HOME PAGE
+# =========================
 @app.route("/")
 def home():
     return render_template("index.html")
 
 
+# =========================
+# BOOKING ROUTE
+# =========================
 @app.route("/book", methods=["POST"])
 def book():
     try:
@@ -30,14 +43,16 @@ def book():
         service = request.form["service"]
         notes = request.form["notes"]
 
-        # ================= ADMIN EMAIL =================
+        # =========================
+        # EMAIL TO OWNER (ADMIN)
+        # =========================
         admin_msg = Message(
-            subject="New Booking NailsVoYou",
+            subject="💅 New Booking NailsVoYou",
             recipients=[app.config["MAIL_USERNAME"]]
         )
 
         admin_msg.body = f"""
-New Booking:
+NEW BOOKING 💅
 
 Name: {first_name} {last_name}
 Email: {email}
@@ -48,11 +63,16 @@ Service: {service}
 Notes: {notes}
 """
 
-        mail.send(admin_msg)
+        try:
+            mail.send(admin_msg)
+        except Exception as e:
+            print("ADMIN EMAIL ERROR:", e)
 
-        # ================= CUSTOMER EMAIL =================
+        # =========================
+        # EMAIL TO CUSTOMER
+        # =========================
         customer_msg = Message(
-            subject="Appointment Confirmed",
+            subject="💅 Appointment Confirmed",
             recipients=[email]
         )
 
@@ -68,7 +88,10 @@ Service: {service}
 We will contact you soon.
 """
 
-        mail.send(customer_msg)
+        try:
+            mail.send(customer_msg)
+        except Exception as e:
+            print("CUSTOMER EMAIL ERROR:", e)
 
         return redirect(url_for("home"))
 
@@ -76,5 +99,8 @@ We will contact you soon.
         return f"ERROR: {str(e)}"
 
 
+# =========================
+# RUN APP
+# =========================
 if __name__ == "__main__":
     app.run()
