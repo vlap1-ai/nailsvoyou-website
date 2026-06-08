@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for
 from flask_mail import Mail, Message
 import os
 
@@ -17,13 +17,16 @@ app.config["MAIL_DEFAULT_SENDER"] = os.getenv("MAIL_USERNAME")
 mail = Mail(app)
 
 # =========================
-# ROUTES
+# HOME PAGE
 # =========================
 @app.route("/")
 def home():
     return render_template("index.html")
 
 
+# =========================
+# BOOKING ROUTE
+# =========================
 @app.route("/book", methods=["POST"])
 def book():
     try:
@@ -36,43 +39,56 @@ def book():
         service = request.form["service"]
         notes = request.form["notes"]
 
-        # ADMIN EMAIL
+        # =====================
+        # EMAIL TO OWNER
+        # =====================
         admin_msg = Message(
-            subject="New Booking NailsVoYou",
+            subject="💅 New Booking NailsVoYou",
             recipients=[app.config["MAIL_USERNAME"]],
         )
 
         admin_msg.body = f"""
-New booking:
-{first_name} {last_name}
-{email}
-{phone}
-{appointment_date} {appointment_time}
-{service}
-{notes}
+New Booking:
+
+Name: {first_name} {last_name}
+Email: {email}
+Phone: {phone}
+Date: {appointment_date}
+Time: {appointment_time}
+Service: {service}
+Notes: {notes}
 """
 
         mail.send(admin_msg)
 
-        # CUSTOMER EMAIL
+        # =====================
+        # EMAIL TO CUSTOMER
+        # =====================
         customer_msg = Message(
-            subject="Appointment Confirmed",
+            subject="💅 Appointment Confirmed",
             recipients=[email],
         )
 
         customer_msg.body = f"""
 Hi {first_name},
-Your appointment is confirmed:
-{appointment_date} at {appointment_time}
+
+Your appointment is confirmed 💅
+
+Date: {appointment_date}
+Time: {appointment_time}
+Service: {service}
+
+We will contact you soon.
 """
 
         mail.send(customer_msg)
 
-        return "<h1>Appointment Submitted 🎉</h1>"
+        # SUCCESS REDIRECT (IMPORTANT)
+        return redirect(url_for("home"))
 
     except Exception as e:
         return f"ERROR: {str(e)}"
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()
