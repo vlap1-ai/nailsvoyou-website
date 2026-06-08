@@ -11,8 +11,8 @@ app.config["MAIL_PORT"] = 587
 app.config["MAIL_USE_TLS"] = True
 
 # 🔥 PUT THẲNG GMAIL + APP PASSWORD
-app.config["MAIL_USERNAME"] = "phuma1959@gmail.com"
-app.config["MAIL_PASSWORD"] = "pbeykweppdwklzdq"
+app.config["MAIL_USERNAME"] = os.getenv("MAIL_USERNAME")
+app.config["MAIL_PASSWORD"] = os.getenv("MAIL_PASSWORD")
 
 mail = Mail(app)
 
