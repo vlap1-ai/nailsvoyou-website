@@ -1,12 +1,30 @@
 from flask import Flask, render_template, request
+from flask_mail import Mail, Message
 
 app = Flask(__name__)
 
+# =========================
+# EMAIL CONFIG
+# =========================
+app.config["MAIL_SERVER"] = "smtp.gmail.com"
+app.config["MAIL_PORT"] = 587
+app.config["MAIL_USE_TLS"] = True
+app.config["MAIL_USERNAME"] = "phuma1959@gmail.com"
+app.config["MAIL_PASSWORD"] = "pbeykweppdwklzdq"
+
+mail = Mail(app)
+
+# =========================
+# HOME PAGE
+# =========================
 @app.route("/")
 def home():
     return render_template("index.html")
 
 
+# =========================
+# BOOKING ROUTE
+# =========================
 @app.route("/book", methods=["POST"])
 def book():
 
@@ -19,91 +37,79 @@ def book():
     service = request.form["service"]
     notes = request.form["notes"]
 
-    print("\n========== NEW APPOINTMENT ==========")
-    print("Name:", first_name, last_name)
-    print("Email:", email)
-    print("Phone:", phone)
-    print("Date:", appointment_date)
-    print("Time:", appointment_time)
-    print("Service:", service)
-    print("Notes:", notes)
-    print("=====================================\n")
+    # =========================
+    # EMAIL TO OWNER (YOU)
+    # =========================
+    owner_msg = Message(
+        subject="💅 New NailsVoYou Booking",
+        sender=app.config["MAIL_USERNAME"],
+        recipients=[app.config["MAIL_USERNAME"]]
+    )
 
-    return f"""
-<!DOCTYPE html>
-<html>
+    owner_msg.body = f"""
+NEW BOOKING RECEIVED
 
-<head>
-
-<title>Appointment Submitted</title>
-
-<style>
-
-body {{
-    font-family:Arial,sans-serif;
-    background:#fff1f7;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    height:100vh;
-}}
-
-.card {{
-    background:white;
-    padding:40px;
-    border-radius:20px;
-    text-align:center;
-    max-width:600px;
-    box-shadow:0 10px 30px rgba(0,0,0,.15);
-}}
-
-h1 {{
-    color:#ff6ea9;
-}}
-
-a {{
-    display:inline-block;
-    margin-top:20px;
-    padding:15px 25px;
-    background:#ff6ea9;
-    color:white;
-    text-decoration:none;
-    border-radius:10px;
-}}
-
-</style>
-
-</head>
-
-<body>
-
-<div class="card">
-
-<h1>🎉 Appointment Submitted!</h1>
-
-<p>Thank you {first_name} {last_name}</p>
-
-<p>We have received your appointment request.</p>
-
-<p>📅 {appointment_date}</p>
-
-<p>⏰ {appointment_time}</p>
-
-<p>📞 {phone}</p>
-
-<p>📧 {email}</p>
-
-<p>NailsVoYou will contact you shortly.</p>
-
-<a href="/">Return Home</a>
-
-</div>
-
-</body>
-
-</html>
+Name: {first_name} {last_name}
+Email: {email}
+Phone: {phone}
+Date: {appointment_date}
+Time: {appointment_time}
+Service: {service}
+Notes: {notes}
 """
 
-if __name__ == "__main__":
-    app.run()
+    mail.send(owner_msg)
 
+
+    # =========================
+    # EMAIL TO CUSTOMER
+    # =========================
+    customer_msg = Message(
+        subject="💅 Your NailsVoYou Appointment Confirmation",
+        sender=app.config["MAIL_USERNAME"],
+        recipients=[email]
+    )
+
+    customer_msg.html = f"""
+    <div style="font-family:Arial; padding:20px;">
+        <h2>💅 NailsVoYou</h2>
+
+        <p>Hi {first_name},</p>
+
+        <p>We received your appointment request.</p>
+
+        <hr>
+
+        <p><b>Date:</b> {appointment_date}</p>
+        <p><b>Time:</b> {appointment_time}</p>
+        <p><b>Service:</b> {service}</p>
+
+        <hr>
+
+        <p>📍 3405 Talbot Rd S, Renton WA</p>
+
+        <p>We will contact you soon to confirm.</p>
+
+        <p>Thank you 💅</p>
+    </div>
+    """
+
+    mail.send(customer_msg)
+
+    # =========================
+    # SUCCESS PAGE
+    # =========================
+    return f"""
+    <html>
+    <body style="font-family:Arial; text-align:center; padding:50px;">
+        <h1>🎉 Appointment Submitted!</h1>
+        <p>Thank you {first_name} {last_name}</p>
+        <p>We sent confirmation to your email.</p>
+        <a href="/">Go Back</a>
+    </body>
+    </html>
+    """
+
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=10000)
