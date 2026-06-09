@@ -1,79 +1,222 @@
+/* =========================
+   GLOBAL
+========================= */
+
 body {
     margin: 0;
-    font-family: Arial, sans-serif;
-    background: #fff5f7;
+    font-family: "Arial", sans-serif;
+    background: #fff0f5;
     color: #333;
 }
 
-/* NAVBAR */
+/* =========================
+   NAVBAR
+========================= */
+
 .navbar {
     display: flex;
     justify-content: space-between;
-    padding: 20px 40px;
+    align-items: center;
+    padding: 20px 50px;
     background: white;
     position: sticky;
     top: 0;
+    z-index: 1000;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.05);
 }
 
-.navbar ul {
+.navbar h2 {
+    color: #ff4f9a;
+    font-weight: bold;
+}
+
+.navbar-links {
     display: flex;
-    gap: 20px;
     list-style: none;
+    gap: 25px;
 }
 
-.navbar a {
+.navbar-links a {
     text-decoration: none;
     color: #333;
+    font-weight: 500;
+    transition: 0.3s;
 }
 
-/* HERO */
+.navbar-links a:hover {
+    color: #ff4f9a;
+}
+
+/* =========================
+   HERO
+========================= */
+
 .hero {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 60px;
+    padding: 80px 50px;
+    background: linear-gradient(135deg, #ffe4ec, #fff);
 }
 
-.hero-img img {
-    width: 300px;
+.hero-left {
+    max-width: 50%;
+}
+
+.badge {
+    display: inline-block;
+    background: white;
+    padding: 8px 15px;
     border-radius: 20px;
+    font-size: 14px;
+    margin-bottom: 15px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+}
+
+.hero h1 {
+    font-size: 48px;
+    margin: 10px 0;
+}
+
+.hero p {
+    font-size: 16px;
+    color: #666;
+}
+
+/* BUTTONS */
+.hero-actions {
+    margin-top: 20px;
+    display: flex;
+    gap: 15px;
 }
 
 .btn {
-    display: inline-block;
-    padding: 10px 20px;
-    background: pink;
-    color: white;
+    padding: 12px 20px;
     border-radius: 10px;
     text-decoration: none;
+    font-weight: bold;
 }
 
-/* GALLERY */
-.gallery {
+.btn--primary {
+    background: #ff4f9a;
+    color: white;
+}
+
+.btn--outline {
+    border: 2px solid #ff4f9a;
+    color: #ff4f9a;
+}
+
+/* HERO IMAGE */
+.hero-right img {
+    width: 380px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+/* =========================
+   FEATURES
+========================= */
+
+.features {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
     padding: 50px;
+}
+
+.feature-card {
+    background: white;
+    padding: 20px;
+    text-align: center;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    font-weight: 500;
+}
+
+/* =========================
+   GALLERY
+========================= */
+
+.gallery {
+    padding: 60px;
     text-align: center;
 }
 
-.grid {
+.gallery h2 {
+    font-size: 32px;
+    margin-bottom: 5px;
+}
+
+.gallery-subtitle {
+    color: #777;
+    margin-bottom: 30px;
+}
+
+.gallery-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 15px;
 }
 
-.grid img {
+.gallery-grid img {
     width: 100%;
-    border-radius: 10px;
+    border-radius: 15px;
+    transition: 0.3s;
 }
 
-/* CONTACT */
+.gallery-grid img:hover {
+    transform: scale(1.05);
+}
+
+/* =========================
+   CONTACT
+========================= */
+
 .contact {
     text-align: center;
-    padding: 50px;
+    padding: 60px;
+    background: white;
 }
 
-/* FOOTER */
-footer {
+.contact-info {
+    margin: 20px 0;
+    line-height: 2;
+}
+
+.instagram-link {
+    display: inline-block;
+    margin-top: 15px;
+    text-decoration: none;
+    color: #ff4f9a;
+    font-weight: bold;
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+.footer {
     text-align: center;
     padding: 20px;
-    background: white;
+    background: #fff0f5;
+}
+
+.developer {
+    font-size: 12px;
+    color: #888;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo img {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    object-fit: cover;
+    box-shadow: 0 4px 12px rgba(255, 105, 180, 0.3);
 }
