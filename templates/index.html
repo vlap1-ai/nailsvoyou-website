@@ -1,155 +1,105 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NailsVoYou | Professional Nail Services</title>
 
-    <!-- Flatpickr CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <title>NailsVoYou</title>
 
-    <!-- Your stylesheet -->
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 
 <body>
 
-<!-- ==================== FLASH MESSAGES ==================== -->
-{% with messages = get_flashed_messages(with_categories=true) %}
-  {% if messages %}
-    <div class="flash-container">
-      {% for category, message in messages %}
-        <div class="flash flash--{{ category }}">
-          {{ message }}
-          <button class="flash-close" onclick="this.parentElement.remove()">✕</button>
-        </div>
-      {% endfor %}
-    </div>
-  {% endif %}
-{% endwith %}
-
-<!-- ==================== NAVBAR ==================== -->
+<!-- NAVBAR -->
 <nav class="navbar">
-    <h2 class="navbar-brand">NailsVoYou</h2>
+    <h2>NailsVoYou</h2>
+
     <ul class="navbar-links">
         <li><a href="#home">Home</a></li>
         <li><a href="#gallery">Gallery</a></li>
         <li><a href="#contact">Contact</a></li>
-        <li><a href="#booking" class="navbar-cta">Book Now</a></li>
     </ul>
 </nav>
 
-<!-- ==================== HERO ==================== -->
+<!-- HERO -->
 <section id="home" class="hero">
+
     <div class="hero-left">
-        <div class="badge">✨ Welcome to NailsVoYou</div>
-        <h1>Beautiful Nails,<br>Beautiful You</h1>
-        <p>Treat yourself to beautiful nail care, custom designs and luxury pampering in Renton, WA.</p>
+
+        <span class="badge">✨ Nail Studio</span>
+
+        <h1>Beautiful Nails,<br>Beautiful You 💅</h1>
+
+        <p>Luxury nail care, modern designs, and relaxing experience.</p>
+
         <div class="hero-actions">
-            <a href="#booking" class="btn btn--primary">Book Appointment</a>
-            <a href="#gallery" class="btn btn--outline">View Gallery</a>
+            <a href="#gallery" class="btn btn--primary">View Gallery</a>
+            <a href="tel:2534099823" class="btn btn--outline">Call Now</a>
         </div>
+
     </div>
+
     <div class="hero-right">
-        <img src="{{ url_for('static', filename='nail background.jpg') }}"
-             alt="NailsVoYou nail art"
-             class="hero-image">
+        <img src="{{ url_for('static', filename='nail background.jpg') }}" class="hero-image">
     </div>
+
 </section>
 
-<!-- ==================== FEATURES ==================== -->
+<!-- FEATURES -->
 <section class="features">
-    <div class="feature-card">
-        <span class="feature-icon">💎</span>
-        <span>Premium Quality</span>
-    </div>
-    <div class="feature-card">
-        <span class="feature-icon">❤️</span>
-        <span>Hygienic & Safe</span>
-    </div>
-    <div class="feature-card">
-        <span class="feature-icon">⏰</span>
-        <span>On Time Service</span>
-    </div>
-    <div class="feature-card">
-        <span class="feature-icon">⭐</span>
-        <span>Skilled Technician</span>
-    </div>
+    <div class="feature-card">💎 Premium Quality</div>
+    <div class="feature-card">❤️ Hygienic & Safe</div>
+    <div class="feature-card">⏰ On Time Service</div>
+    <div class="feature-card">⭐ Skilled Technician</div>
 </section>
 
-<!-- ==================== GALLERY ==================== -->
+<!-- GALLERY -->
 <section id="gallery" class="gallery">
+
     <h2>Our Gallery</h2>
-    <p class="gallery-subtitle">Handcrafted designs made just for you</p>
+
+    <p class="gallery-subtitle">Latest nail designs</p>
+
     <div class="gallery-grid">
-        <img src="{{ url_for('static', filename='nail example 1.jpeg') }}" alt="Nail Design 1">
-        <img src="{{ url_for('static', filename='nail example 2.jpeg') }}" alt="Nail Design 2">
-        <img src="{{ url_for('static', filename='nail example 3.jpeg') }}" alt="Nail Design 3">
-        <img src="{{ url_for('static', filename='nail example 4.jpeg') }}" alt="Nail Design 4">
-        <img src="{{ url_for('static', filename='nail example 5.jpeg') }}" alt="Nail Design 5">
-        <img src="{{ url_for('static', filename='nail example 6.jpeg') }}" alt="Nail Design 6">
+        <img src="{{ url_for('static', filename='nail example 1.jpeg') }}">
+        <img src="{{ url_for('static', filename='nail example 2.jpeg') }}">
+        <img src="{{ url_for('static', filename='nail example 3.jpeg') }}">
+        <img src="{{ url_for('static', filename='nail example 4.jpeg') }}">
+        <img src="{{ url_for('static', filename='nail example 5.jpeg') }}">
+        <img src="{{ url_for('static', filename='nail example 6.jpeg') }}">
     </div>
+
 </section>
 
-<!-- ==================== BOOKING ==================== -->
-<section id="booking" class="booking-section">
-    <h2>💅 Book Your Appointment</h2>
-    <p class="booking-subtitle">Fill in your details and we'll confirm shortly</p>
-
-    <form class="booking-card" action="/book" method="POST">
-
-        <div class="form-row">
-            <input type="text"  name="first_name" placeholder="First Name" required>
-            <input type="text"  name="last_name"  placeholder="Last Name"  required>
-        </div>
-
-        <input type="email" name="email" placeholder="Email Address" required>
-        <input type="tel"   name="phone" placeholder="Phone Number"  required>
-
-        <div class="form-row">
-            <input type="text" id="appointment-date" name="appointment_date"
-                   placeholder="Select Date" autocomplete="off" required>
-            <input type="text" id="appointment-time" name="appointment_time"
-                   placeholder="Select Time" autocomplete="off" required>
-        </div>
-
-        <input type="text" name="service" placeholder="Requested Service (e.g. Gel Manicure)" required>
-
-        <textarea name="notes" rows="4" placeholder="Additional Notes (optional)"></textarea>
-
-        <button type="submit" class="btn btn--primary btn--full">Book Appointment</button>
-    </form>
-</section>
-
-<!-- ==================== CONTACT ==================== -->
+<!-- CONTACT -->
 <section id="contact" class="contact">
+
     <h2>Contact Us</h2>
+
     <div class="contact-info">
-        <p>📞 <a href="tel:2534099823">(253) 409-9823</a></p>
-        <p>📧 <a href="mailto:phuma1959@gmail.com">phuma1959@gmail.com</a></p>
-        <p>📍 3405 Talbot Rd S, Renton, WA 98055</p>
+        <p>📞 (253) 409-9823</p>
+        <p>📧 phuma1959@gmail.com</p>
+        <p>📍 Renton, WA</p>
     </div>
-    <a href="https://www.instagram.com/nailsvoyou/" target="_blank" rel="noopener" class="instagram-link">
-        <img src="{{ url_for('static', filename='instagram.jpeg') }}"
-             alt="Follow us on Instagram @nailsvoyou"
-             class="instagram-icon">
-        <span>@nailsvoyou</span>
+
+    <a href="https://www.instagram.com/nailsvoyou/" target="_blank" class="instagram-link">
+        💬 Instagram @nailsvoyou
     </a>
+
 </section>
 
-<!-- ==================== FOOTER ==================== -->
+<!-- FOOTER -->
 <footer class="footer">
-    <h3>NailsVoYou</h3>
-    <p>Beautiful Nails, Beautiful You</p>
-    <p>📍 Renton, WA &nbsp;|&nbsp; 📞 (253) 409-9823</p>
-    <p class="developer">Website Designed &amp; Developed by Roy</p>
-</footer>
 
-<!-- ==================== SCRIPTS ==================== -->
-<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-<script src="{{ url_for('static', filename='script.js') }}"></script>
+    <h3>NailsVoYou</h3>
+
+    <p>Beautiful Nails, Beautiful You</p>
+
+    <p class="developer">Website by Roy</p>
+
+</footer>
 
 </body>
 </html>
