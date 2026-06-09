@@ -8,6 +8,10 @@
     <title>NailsVoYou</title>
 
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <!-- FAVICON (optional) -->
+    <link rel="icon" href="{{ url_for('static', filename='nail background.jpg') }}">
+
 </head>
 
 <body>
@@ -16,7 +20,7 @@
 <nav class="navbar">
     <h2>NailsVoYou</h2>
 
-    <ul class="navbar-links">
+    <ul>
         <li><a href="#home">Home</a></li>
         <li><a href="#gallery">Gallery</a></li>
         <li><a href="#contact">Contact</a></li>
@@ -26,43 +30,24 @@
 <!-- HERO -->
 <section id="home" class="hero">
 
-    <div class="hero-left">
+    <div class="hero-text">
+        <h1>Beautiful Nails, Beautiful You 💅</h1>
+        <p>Luxury nail care & modern designs</p>
 
-        <span class="badge">✨ Nail Studio</span>
-
-        <h1>Beautiful Nails,<br>Beautiful You 💅</h1>
-
-        <p>Luxury nail care, modern designs, and relaxing experience.</p>
-
-        <div class="hero-actions">
-            <a href="#gallery" class="btn btn--primary">View Gallery</a>
-            <a href="tel:2534099823" class="btn btn--outline">Call Now</a>
-        </div>
-
+        <a class="btn" href="#gallery">View Gallery</a>
     </div>
 
-    <div class="hero-right">
-        <img src="{{ url_for('static', filename='nail background.jpg') }}" class="hero-image">
+    <div class="hero-img">
+        <img src="{{ url_for('static', filename='nail background.jpg') }}" alt="logo">
     </div>
 
-</section>
-
-<!-- FEATURES -->
-<section class="features">
-    <div class="feature-card">💎 Premium Quality</div>
-    <div class="feature-card">❤️ Hygienic & Safe</div>
-    <div class="feature-card">⏰ On Time Service</div>
-    <div class="feature-card">⭐ Skilled Technician</div>
 </section>
 
 <!-- GALLERY -->
 <section id="gallery" class="gallery">
+    <h2>Our Work</h2>
 
-    <h2>Our Gallery</h2>
-
-    <p class="gallery-subtitle">Latest nail designs</p>
-
-    <div class="gallery-grid">
+    <div class="grid">
         <img src="{{ url_for('static', filename='nail example 1.jpeg') }}">
         <img src="{{ url_for('static', filename='nail example 2.jpeg') }}">
         <img src="{{ url_for('static', filename='nail example 3.jpeg') }}">
@@ -70,35 +55,20 @@
         <img src="{{ url_for('static', filename='nail example 5.jpeg') }}">
         <img src="{{ url_for('static', filename='nail example 6.jpeg') }}">
     </div>
-
 </section>
 
 <!-- CONTACT -->
 <section id="contact" class="contact">
+    <h2>Contact</h2>
 
-    <h2>Contact Us</h2>
-
-    <div class="contact-info">
-        <p>📞 (253) 409-9823</p>
-        <p>📧 phuma1959@gmail.com</p>
-        <p>📍 Renton, WA</p>
-    </div>
-
-    <a href="https://www.instagram.com/nailsvoyou/" target="_blank" class="instagram-link">
-        💬 Instagram @nailsvoyou
-    </a>
-
+    <p>📞 (253) 409-9823</p>
+    <p>📧 phuma1959@gmail.com</p>
+    <p>📍 Renton, WA</p>
 </section>
 
 <!-- FOOTER -->
-<footer class="footer">
-
-    <h3>NailsVoYou</h3>
-
-    <p>Beautiful Nails, Beautiful You</p>
-
-    <p class="developer">Website by Roy</p>
-
+<footer>
+    <p>© NailsVoYou</p>
 </footer>
 
 </body>
