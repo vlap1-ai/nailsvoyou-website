@@ -8,24 +8,21 @@
     <title>NailsVoYou</title>
 
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='nail background.jpg') }}">
 </head>
 
 <body>
 
 <!-- NAVBAR -->
 <nav class="navbar">
-
-    <div class="logo">
-        <img src="{{ url_for('static', filename='nail background.jpg') }}" alt="logo">
-        <h2>NailsVoYou</h2>
-    </div>
-
+    <h2 class="navbar-brand">NailsVoYou</h2>
     <ul class="navbar-links">
         <li><a href="#home">Home</a></li>
         <li><a href="#gallery">Gallery</a></li>
         <li><a href="#contact">Contact</a></li>
+        <li><a href="#booking" class="navbar-cta">Book Now</a></li>
     </ul>
-
 </nav>
 
 <!-- HERO -->
